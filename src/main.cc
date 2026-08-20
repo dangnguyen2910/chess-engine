@@ -1,17 +1,11 @@
 #include <iostream> 
 #include <vector>
+#include "board.h"
 
 int main() {
-    std::vector<std::vector<char>> board = {
-        {'r', 'n', 'b', 'q', 'k', 'b', 'n', 'r'}, 
-        {'p', 'p', 'p', 'p', 'p', 'p', 'p', 'p'}, 
-        {'.', '.', '.', '.', '.', '.', '.', '.'}, 
-        {'.', '.', '.', '.', '.', '.', '.', '.'}, 
-        {'.', '.', '.', '.', '.', '.', '.', '.'}, 
-        {'.', '.', '.', '.', '.', '.', '.', '.'}, 
-        {'p', 'p', 'p', 'p', 'p', 'p', 'p', 'p'}, 
-        {'r', 'n', 'b', 'q', 'k', 'b', 'n', 'r'}, 
-    }; 
+    Board board; 
+    std::string board_repr = board.print(); 
+    std::cout << board_repr << std::endl; 
 
     return 0; 
 }
