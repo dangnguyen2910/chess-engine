@@ -13,7 +13,8 @@ FetchContent_Declare(
 FetchContent_MakeAvailable(googletest)
 
 add_library(chess-engine
-    src/board.cc
+    src/board.cc include/board.h    
+    src/move_generator.cc include/move_generator.h
 )
 target_include_directories(chess-engine PUBLIC include)
 
@@ -26,6 +27,7 @@ target_link_libraries(chess-engine-app PRIVATE chess-engine)
 enable_testing()
 add_executable(chess-tests
     tests/board_test.cc
+    tests/move_generator_test.cc
 )  
 target_link_libraries(
     chess-tests
