@@ -2,31 +2,41 @@
 #include <string>
 
 Board::Board() {
-    white_pawns_pos = 65280ULL; 
-    white_rooks_pos = 129ULL;
-    white_knights_pos = 66ULL; 
-    white_bishops_pos = 36ULL; 
-    white_king_pos = 16ULL; 
-    white_queen_pos = 8ULL; 
+    _white_pawns_pos = 65280ULL; 
+    _white_rooks_pos = 129ULL;
+    _white_knights_pos = 66ULL; 
+    _white_bishops_pos = 36ULL; 
+    _white_king_pos = 16ULL; 
+    _white_queen_pos = 8ULL; 
 
-    black_pawns_pos = 71776119061217280ULL; 
-    black_rooks_pos = 9295429630892703744ULL; 
-    black_knights_pos = 4755801206503243776ULL; 
-    black_bishops_pos = 2594073385365405696ULL; 
-    black_queen_pos = 576460752303423488ULL; 
-    black_king_pos = 1152921504606846976ULL;
+    _black_pawns_pos = 71776119061217280ULL; 
+    _black_rooks_pos = 9295429630892703744ULL; 
+    _black_knights_pos = 4755801206503243776ULL; 
+    _black_bishops_pos = 2594073385365405696ULL; 
+    _black_queen_pos = 576460752303423488ULL; 
+    _black_king_pos = 1152921504606846976ULL;
     
-    en_passant_pos = 1099494850560ULL; 
+    _en_passant_pos = 1099494850560ULL; 
 
-    white_move = true; 
-    white_castling_right = {true, true}; 
-    black_castling_right = {true, true}; 
+    _is_white_move = true; 
+    _white_castling_right = {true, true}; 
+    _black_castling_right = {true, true}; 
 
-    halfmove_clock = 0; 
+    _halfmove_clock = 0; 
 }
 
 Board::~Board() {
 
+}
+
+std::uint64_t Board::get_white_pieces_pos() {
+    return _white_pawns_pos | _white_rooks_pos | _white_knights_pos | 
+           _white_bishops_pos | _white_king_pos | _white_queen_pos; 
+}
+
+std::uint64_t Board::get_black_pieces_pos() {
+    return _black_pawns_pos | _black_rooks_pos | _black_knights_pos | 
+           _black_bishops_pos | _black_king_pos | _black_queen_pos; 
 }
 
 std::string Board::to_string() {
@@ -36,17 +46,17 @@ std::string Board::to_string() {
         board_visualization += std::to_string(rank + 1) + "| "; 
         for (int file = 0; file < 8; file++) {
             int square = rank * 8 + file; 
-            if (white_pawns_pos & (1ULL << square) || black_pawns_pos & (1ULL << square)) {
+            if (_white_pawns_pos & (1ULL << square) || _black_pawns_pos & (1ULL << square)) {
                 board_visualization += "p "; 
-            } else if (white_rooks_pos & (1ULL << square) || black_rooks_pos & (1ULL << square)) {
+            } else if (_white_rooks_pos & (1ULL << square) || _black_rooks_pos & (1ULL << square)) {
                 board_visualization += "r "; 
-            } else if (white_knights_pos & (1ULL << square) || black_knights_pos & (1ULL << square)) {
+            } else if (_white_knights_pos & (1ULL << square) || _black_knights_pos & (1ULL << square)) {
                 board_visualization += "n "; 
-            } else if (white_bishops_pos & (1ULL << square) || black_bishops_pos & (1ULL << square)) {
+            } else if (_white_bishops_pos & (1ULL << square) || _black_bishops_pos & (1ULL << square)) {
                 board_visualization += "b "; 
-            } else if (white_king_pos & (1ULL << square) || black_king_pos & (1ULL << square)) {
+            } else if (_white_king_pos & (1ULL << square) || _black_king_pos & (1ULL << square)) {
                 board_visualization += "k "; 
-            } else if (white_queen_pos & (1ULL << square) || black_queen_pos & (1ULL << square)) {
+            } else if (_white_queen_pos & (1ULL << square) || _black_queen_pos & (1ULL << square)) {
                 board_visualization += "q "; 
             } else {
                 board_visualization += ". "; 

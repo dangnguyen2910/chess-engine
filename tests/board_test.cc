@@ -16,3 +16,17 @@ TEST(Board, to_string) {
                            "   a b c d e f g h";
     EXPECT_EQ(board_str, expected);
 }
+
+TEST(Board, get_white_position) {
+    Board board; 
+    std::uint64_t position = board.get_white_pieces_pos(); 
+    std::uint64_t expected = 0b1111'1111'1111'1111; 
+    EXPECT_EQ(position, expected); 
+}
+
+TEST(Board, get_black_position) {
+    Board board; 
+    std::uint64_t position = board.get_black_pieces_pos(); 
+    std::uint64_t expected = 0xFFFF000000000000; 
+    EXPECT_EQ(position, expected); 
+}
