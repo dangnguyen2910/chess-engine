@@ -9,7 +9,7 @@ class Board {
         Board(); 
         ~Board(); 
 
-        std::string print(); 
+        std::string to_string(); 
 
 
     private: 
@@ -26,9 +26,13 @@ class Board {
         std::uint64_t black_bishops_pos; 
         std::uint64_t black_king_pos; 
         std::uint64_t black_queen_pos;
+
+        std::uint64_t en_passant_pos; 
         
         bool white_move; 
-        bool white_can_castle; 
-        bool black_can_castle; 
+        std::vector<bool> white_castling_right; 
+        std::vector<bool> black_castling_right; 
+
+        int halfmove_clock; 
 
 }; 

@@ -14,18 +14,22 @@ Board::Board() {
     black_knights_pos = 4755801206503243776ULL; 
     black_bishops_pos = 2594073385365405696ULL; 
     black_queen_pos = 576460752303423488ULL; 
-    black_king_pos = 1152921504606846976ULL; 
+    black_king_pos = 1152921504606846976ULL;
+    
+    en_passant_pos = 1099494850560ULL; 
 
     white_move = true; 
-    white_can_castle = true; 
-    black_can_castle = true; 
+    white_castling_right = {true, true}; 
+    black_castling_right = {true, true}; 
+
+    halfmove_clock = 0; 
 }
 
 Board::~Board() {
 
 }
 
-std::string Board::print() {
+std::string Board::to_string() {
     std::string board_visualization = ""; 
 
     for (int rank = 7; rank >= 0; rank--) {
