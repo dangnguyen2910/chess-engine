@@ -1,8 +1,9 @@
-cmake_minimum_required(VERSION 3.20)
+cmake_minimum_required(VERSION 3.20...4.3)
 
 project(ChessEngine LANGUAGES CXX)
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
+set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
 # GoogleTest
 include(FetchContent)
@@ -15,6 +16,7 @@ FetchContent_MakeAvailable(googletest)
 add_library(chess-engine
     src/board.cc include/board.h    
     src/move_generator.cc include/move_generator.h
+    src/square.cc include/square.h
 )
 target_include_directories(chess-engine PUBLIC include)
 
@@ -28,7 +30,8 @@ enable_testing()
 add_executable(chess-tests
     tests/board_test.cc
     tests/move_generator_test.cc
-)  
+    tests/square_test.cc
+)
 target_link_libraries(
     chess-tests
     GTest::gtest_main
