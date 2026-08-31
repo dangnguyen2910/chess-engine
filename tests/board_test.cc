@@ -3,8 +3,9 @@
 
 TEST(Board, to_string) {
     Board board;
-    std::string board_str = board.to_string();  
-    std::string expected = "8| r n b q k b n r \n" 
+    board.initial_position();
+    std::string board_str = board.to_string();
+    std::string expected = "8| r n b q k b n r \n"
                            "7| p p p p p p p p \n"
                            "6| . . . . . . . . \n"
                            "5| . . . . . . . . \n"
@@ -18,15 +19,24 @@ TEST(Board, to_string) {
 }
 
 TEST(Board, get_white_position) {
-    Board board; 
-    std::uint64_t position = board.get_white_pieces_pos(); 
-    std::uint64_t expected = 0b1111'1111'1111'1111; 
-    EXPECT_EQ(position, expected); 
+    Board board;
+    board.initial_position();
+    std::uint64_t position = board.get_white_pieces_pos();
+    std::uint64_t expected = 0b1111'1111'1111'1111;
+    EXPECT_EQ(position, expected);
 }
 
 TEST(Board, get_black_position) {
-    Board board; 
-    std::uint64_t position = board.get_black_pieces_pos(); 
-    std::uint64_t expected = 0xFFFF000000000000; 
-    EXPECT_EQ(position, expected); 
+    Board board;
+    board.initial_position();
+    std::uint64_t position = board.get_black_pieces_pos();
+    std::uint64_t expected = 0xFFFF000000000000;
+    EXPECT_EQ(position, expected);
+}
+
+TEST(Board, set_knight) {
+    Board board;
+    board.set_piece(Piece::KNIGHT, Color::WHITE, Square::E4);
+    std::uint64_t expected = 1ULL << 28;
+    EXPECT_EQ(board.get_white_knights_pos(), expected);
 }

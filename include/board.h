@@ -24,6 +24,8 @@ class Board {
         Board();
         ~Board();
 
+        void initial_position();
+
         void set_piece(Piece piece, Color color, Square square);
 
         std::uint64_t get_white_pieces_pos();

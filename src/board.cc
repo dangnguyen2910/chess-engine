@@ -3,6 +3,30 @@
 #include <string>
 
 Board::Board() {
+    _white_pawns_pos = 0;
+    _white_rooks_pos = 0;
+    _white_knights_pos = 0;
+    _white_bishops_pos = 0;
+    _white_king_pos = 0;
+    _white_queen_pos = 0;
+
+    _black_pawns_pos = 0;
+    _black_rooks_pos = 0;
+    _black_knights_pos = 0;
+    _black_bishops_pos = 0;
+    _black_queen_pos = 0;
+    _black_king_pos = 0;
+
+    _en_passant_pos = 0;
+
+    _is_white_move = true;
+    _white_castling_right = {true, true};
+    _black_castling_right = {true, true};
+
+    _halfmove_clock = 0;
+}
+
+void Board::initial_position() {
     _white_pawns_pos = 65280ULL;
     _white_rooks_pos = 129ULL;
     _white_knights_pos = 66ULL;
