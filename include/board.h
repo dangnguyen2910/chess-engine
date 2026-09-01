@@ -27,6 +27,7 @@ class Board {
         void initial_position();
 
         void set_piece(Piece piece, Color color, Square square);
+        void set_moveside(Color color);
 
         std::uint64_t get_white_pieces_pos();
         std::uint64_t get_white_knights_pos() { return _white_knights_pos; }

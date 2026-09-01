@@ -77,6 +77,13 @@ void Board::set_piece(Piece piece, Color color, Square square) {
     }
 }
 
+void Board::set_moveside(Color color) {
+    switch (color) {
+        case Color::WHITE: _is_white_move = true; break;
+        case Color::BLACK: _is_white_move = false; break;
+    }
+}
+
 std::uint64_t Board::get_white_pieces_pos() {
     return _white_pawns_pos | _white_rooks_pos | _white_knights_pos |
            _white_bishops_pos | _white_king_pos | _white_queen_pos;
