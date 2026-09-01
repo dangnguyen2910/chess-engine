@@ -31,9 +31,11 @@ class Board {
 
         std::uint64_t get_white_pieces_pos();
         std::uint64_t get_white_knights_pos() { return _white_knights_pos; }
+        std::uint64_t get_white_king_pos() { return _white_king_pos; }
 
         std::uint64_t get_black_pieces_pos();
         std::uint64_t get_black_knights_pos() { return _black_knights_pos; };
+        std::uint64_t get_black_king_pos() { return _black_king_pos; }
 
         bool is_white_move() { return _is_white_move; }
 
