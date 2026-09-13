@@ -2,6 +2,7 @@
 #include "board.h"
 #include "move_generator.h"
 #include "square.h"
+#include <bitset>
 
 TEST(MoveGenerator, generate_white_knights_moves_initial_position) {
     Board board;
@@ -120,5 +121,48 @@ TEST(MoveGenerator, generate_white_king_moves_pos3) {
 
     expected |= to_bitboard(D5) | to_bitboard(E5) | to_bitboard(F5) | to_bitboard(F4)
              | to_bitboard(F3) | to_bitboard(E3) | to_bitboard(D3) | to_bitboard(D4);
+    ASSERT_EQ(moves, expected);
+}
+
+TEST(MoveGenerator, generate_white_rooks_moves_pos1) {
+    using enum Square;
+    Board board;
+    board.set_piece(Piece::ROOK, Color::WHITE, Square::E4);
+    board.set_piece(Piece::ROOK, Color::WHITE, Square::A1);
+
+    MoveGenerator generator = MoveGenerator(board);
+    std::uint64_t moves = generator.generate_rooks_moves();
+
+    std::uint64_t expected = 0ULL;
+    std::vector<Square> squares = {A1, A2, A3, A4, A5, A6, A7, A8, B1, C1, D1, E1, F1, G1, H1,
+                                   E2, E3, E4, E5, E6, E7, E8, B4, C4, D4, F4, G4, H4};
+    std::vector<std::uint64_t> bbs = to_bitboard(squares);
+
+    for (const auto& bb : bbs) {
+        expected |= bb;
+    }
+    ASSERT_EQ(moves, expected);
+}
+
+
+TEST(MoveGenerator, generate_white_rooks_moves_pos2) {
+    using enum Square;
+    Board board;
+    board.set_piece(Piece::ROOK, Color::WHITE, Square::E4);
+    board.set_piece(Piece::PAWN, Color::WHITE, E7);
+    board.set_piece(Piece::PAWN, Color::WHITE, H4);
+    board.set_piece(Piece::PAWN, Color::BLACK, B4);
+    board.set_piece(Piece::PAWN, Color::BLACK, E2);
+
+    MoveGenerator generator = MoveGenerator(board);
+    std::uint64_t moves = generator.generate_rooks_moves();
+
+    std::uint64_t expected = 0ULL;
+    std::vector<Square> squares = {E2, E3, E4, E5, E6, B4, C4, D4, F4, G4};
+    std::vector<std::uint64_t> bbs = to_bitboard(squares);
+
+    for (const auto& bb : bbs) {
+        expected |= bb;
+    }
     ASSERT_EQ(moves, expected);
 }
