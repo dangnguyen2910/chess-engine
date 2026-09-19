@@ -83,6 +83,36 @@ void Board::set_piece(Piece piece, Color color, Square square) {
     }
 }
 
+void Board::set_piece(Piece piece, Color color, std::uint64_t bitboard) {
+    switch (piece) {
+        case Piece::KNIGHT:
+            if (color == Color::WHITE) _white_knights_pos |= bitboard;
+            if (color == Color::BLACK) _black_knights_pos |= bitboard;
+            break;
+        case Piece::PAWN:
+            if (color == Color::WHITE) _white_pawns_pos |= bitboard;
+            if (color == Color::BLACK) _black_pawns_pos |= bitboard;
+            break;
+        case Piece::BISHOP:
+            if (color == Color::WHITE) _white_bishops_pos |= bitboard;
+            if (color == Color::BLACK) _black_bishops_pos |= bitboard;
+            break;
+        case Piece::KING:
+            if (color == Color::WHITE) _white_king_pos |= bitboard;
+            if (color == Color::BLACK) _black_king_pos |= bitboard;
+            break;
+        case Piece::QUEEN:
+            if (color == Color::WHITE) _white_queen_pos |= bitboard;
+            if (color == Color::BLACK) _black_queen_pos |= bitboard;
+            break;
+        case Piece::ROOK:
+            if (color == Color::WHITE) _white_rooks_pos |= bitboard;
+            if (color == Color::BLACK) _black_rooks_pos |= bitboard;
+            break;
+    }
+}
+
+
 void Board::set_moveside(Color color) {
     switch (color) {
         case Color::WHITE: _is_white_move = true; break;
