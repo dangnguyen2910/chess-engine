@@ -134,8 +134,8 @@ TEST(MoveGenerator, generate_white_rooks_moves_pos1) {
     std::uint64_t moves = generator.generate_rooks_moves();
 
     std::uint64_t expected = 0ULL;
-    std::vector<Square> squares = {A1, A2, A3, A4, A5, A6, A7, A8, B1, C1, D1, E1, F1, G1, H1,
-                                   E2, E3, E4, E5, E6, E7, E8, B4, C4, D4, F4, G4, H4};
+    std::vector<Square> squares = {A2, A3, A4, A5, A6, A7, A8, B1, C1, D1, E1, F1, G1, H1,
+                                   E2, E3, E5, E6, E7, E8, B4, C4, D4, F4, G4, H4};
     std::vector<std::uint64_t> bbs = to_bitboard(squares);
 
     for (const auto& bb : bbs) {
@@ -158,7 +158,7 @@ TEST(MoveGenerator, generate_white_rooks_moves_pos2) {
     std::uint64_t moves = generator.generate_rooks_moves();
 
     std::uint64_t expected = 0ULL;
-    std::vector<Square> squares = {E2, E3, E4, E5, E6, B4, C4, D4, F4, G4};
+    std::vector<Square> squares = {E2, E3, E5, E6, B4, C4, D4, F4, G4};
     std::vector<std::uint64_t> bbs = to_bitboard(squares);
 
     for (const auto& bb : bbs) {
