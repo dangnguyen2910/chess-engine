@@ -59,21 +59,27 @@ void Board::set_piece(Piece piece, Color color, Square square) {
         case Piece::KNIGHT:
             if (color == Color::WHITE) _white_knights_pos |= to_bitboard(square);
             if (color == Color::BLACK) _black_knights_pos |= to_bitboard(square);
+            break;
         case Piece::PAWN:
             if (color == Color::WHITE) _white_pawns_pos |= to_bitboard(square);
             if (color == Color::BLACK) _black_pawns_pos |= to_bitboard(square);
+            break;
         case Piece::BISHOP:
             if (color == Color::WHITE) _white_bishops_pos |= to_bitboard(square);
             if (color == Color::BLACK) _black_bishops_pos |= to_bitboard(square);
+            break;
         case Piece::KING:
             if (color == Color::WHITE) _white_king_pos |= to_bitboard(square);
             if (color == Color::BLACK) _black_king_pos |= to_bitboard(square);
+            break;
         case Piece::QUEEN:
             if (color == Color::WHITE) _white_queen_pos |= to_bitboard(square);
             if (color == Color::BLACK) _black_queen_pos |= to_bitboard(square);
+            break;
         case Piece::ROOK:
             if (color == Color::WHITE) _white_rooks_pos |= to_bitboard(square);
             if (color == Color::BLACK) _black_rooks_pos |= to_bitboard(square);
+            break;
     }
 }
 
