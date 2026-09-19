@@ -9,18 +9,18 @@ constexpr uint64_t FILE_H = 0x8080808080808080ULL;
 
 class MoveGenerator {
     public:
-        MoveGenerator(); 
+        MoveGenerator();
         MoveGenerator(Board board);
-        void generate_moves(); 
+        void generate_moves();
 
-        std::uint64_t generate_pawns_moves(); 
-        std::uint64_t generate_knights_moves(); 
-        std::uint64_t generate_bishops_moves(); 
-        std::uint64_t generate_rooks_moves(); 
-        std::uint64_t generate_king_moves(); 
-        std::uint64_t generate_queen_moves(); 
+        std::uint64_t generate_pawns_moves();
+        std::uint64_t generate_knights_moves();
+        std::uint64_t generate_bishops_moves();
+        std::uint64_t generate_rooks_moves();
+        std::uint64_t generate_king_moves();
+        std::uint64_t generate_queen_moves();
 
-    private: 
-        Board _board; 
+    private:
+        Board _board;
 
 };
