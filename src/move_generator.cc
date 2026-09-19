@@ -1,4 +1,5 @@
 #include "move_generator.h"
+#include "board.h"
 #include <bit>
 #include <bitset>
 #include <iostream>
@@ -119,6 +120,75 @@ std::uint64_t MoveGenerator::generate_rooks_moves() {
             if (1ULL << (8 * rank + j) & enemy_pos) break;
         }
         rooks_pos -= rook;
+    }
+
+    return moves;
+}
+
+std::uint64_t MoveGenerator::generate_bishops_moves() {
+    std::uint64_t moves = 0ULL;
+    std::uint64_t bishops_pos;
+    std::uint64_t friend_pos;
+    std::uint64_t enemy_pos;
+
+    if (_board.is_white_move()) {
+        bishops_pos = _board.get_white_bishops_pos();
+        friend_pos = _board.get_white_pieces_pos();
+        enemy_pos = _board.get_black_pieces_pos();
+    } else {
+        bishops_pos = _board.get_black_bishops_pos();
+        friend_pos = _board.get_black_pieces_pos();
+        enemy_pos = _board.get_white_pieces_pos();
+    }
+
+    while (bishops_pos != 0) {
+        std::uint64_t bishop = bishops_pos & (-bishops_pos);
+
+        int pos = std::countr_zero(bishop);
+        int rank = pos / 8;
+        int file = pos % 8;
+        std::cout << "Rank = " << rank << std::endl;
+        std::cout << "File = " << file << std::endl;
+
+        Board board;
+
+        // North-East
+        std::uint64_t attack_square = bishop;
+        for (int i = file + 1; i < 8; i++) {
+            attack_square = attack_square << 9;
+            if ((attack_square & (~friend_pos)) == 0) break;
+            moves |= attack_square;
+            if ((attack_square & (~enemy_pos)) == 0) break;
+        }
+
+        // South-East
+        attack_square = bishop;
+        for (int i = file + 1; i < 8; i++) {
+            attack_square = attack_square >> 7;
+            if ((attack_square & (~friend_pos)) == 0) break;
+            moves |= attack_square;
+            if ((attack_square & (~enemy_pos)) == 0) break;
+        }
+
+        // South-West
+        attack_square = bishop;
+        for (int i = file - 1; i >= 0; i--) {
+            attack_square = attack_square >> 9;
+            if ((attack_square & (~friend_pos)) == 0) break;
+            moves |= attack_square;
+            if ((attack_square & (~enemy_pos)) == 0) break;
+        }
+
+        // North-West
+        attack_square = bishop;
+        for (int i = file - 1; i >= 0; i--) {
+            attack_square = attack_square << 7;
+            if ((attack_square & (~friend_pos)) == 0) break;
+            moves |= attack_square;
+            if ((attack_square & (~enemy_pos)) == 0) break;
+        }
+
+        bishops_pos -= bishop;
     }
 
     return moves;

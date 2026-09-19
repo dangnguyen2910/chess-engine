@@ -166,3 +166,64 @@ TEST(MoveGenerator, generate_white_rooks_moves_pos2) {
     }
     ASSERT_EQ(moves, expected);
 }
+
+TEST(MoveGenerator, generate_white_bishops_moves_pos1) {
+    using enum Square;
+    Board board;
+    board.set_piece(Piece::BISHOP, Color::WHITE, Square::B5);
+    board.set_piece(Piece::BISHOP, Color::WHITE, Square::E5);
+
+    MoveGenerator generator = MoveGenerator(board);
+    std::uint64_t moves = generator.generate_bishops_moves();
+
+    std::uint64_t expected = 0ULL;
+    std::vector<Square> squares = {C6, D7, E8, C4, D3, E2, F1, A4, A6,
+                                   F6, G7, H8, F4, G3, H2, D4, C3, B2, A1, D6, C7, B8};
+    std::vector<std::uint64_t> bbs = to_bitboard(squares);
+
+    for (const auto& bb : bbs) {
+        expected |= bb;
+    }
+    ASSERT_EQ(moves, expected);
+}
+
+TEST(MoveGenerator, generate_white_bishops_moves_pos2) {
+    using enum Square;
+    Board board;
+    board.set_piece(Piece::BISHOP, Color::WHITE, Square::B5);
+    board.set_piece(Piece::BISHOP, Color::WHITE, Square::E5);
+    board.set_piece(Piece::KNIGHT, Color::WHITE, Square::D3);
+    board.set_piece(Piece::ROOK, Color::BLACK, Square::D7);
+    board.set_piece(Piece::BISHOP, Color::BLACK, Square::G7);
+
+    MoveGenerator generator = MoveGenerator(board);
+    std::uint64_t moves = generator.generate_bishops_moves();
+
+    std::uint64_t expected = 0ULL;
+    std::vector<Square> squares = {C6, D7, C4, A4, A6,
+                                   F6, G7, F4, G3, H2, D4, C3, B2, A1, D6, C7, B8};
+    std::vector<std::uint64_t> bbs = to_bitboard(squares);
+
+    for (const auto& bb : bbs) {
+        expected |= bb;
+    }
+    ASSERT_EQ(moves, expected);
+}
+
+TEST(MoveGenerator, generate_white_bishops_moves_pos3) {
+    using enum Square;
+    Board board;
+    board.set_piece(Piece::BISHOP, Color::WHITE, Square::A1);
+
+    MoveGenerator generator = MoveGenerator(board);
+    std::uint64_t moves = generator.generate_bishops_moves();
+
+    std::uint64_t expected = 0ULL;
+    std::vector<Square> squares = { B2, C3, D4, E5, F6, G7, H8 };
+    std::vector<std::uint64_t> bbs = to_bitboard(squares);
+
+    for (const auto& bb : bbs) {
+        expected |= bb;
+    }
+    ASSERT_EQ(moves, expected);
+}
