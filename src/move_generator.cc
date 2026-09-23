@@ -312,10 +312,6 @@ std::uint64_t MoveGenerator::_generate_white_pawns_moves() {
     moves |= ((pawns_pos & ~FILE_A) << 7) & enemy_pos;
     moves |= ((pawns_pos & ~FILE_H) << 9) & enemy_pos;
 
-    Board board;
-    board.set_piece(Piece::PAWN, Color::WHITE, moves);
-    std::cout << board.to_string() << std::endl;
-
     return moves;
 }
 
@@ -324,6 +320,12 @@ std::uint64_t MoveGenerator::_generate_black_pawns_moves() {
     std::uint64_t pawns_pos = _board.get_black_pawns_pos();
     std::uint64_t friend_pos = _board.get_black_pieces_pos();
     std::uint64_t enemy_pos = _board.get_white_pieces_pos();
+    std::uint64_t pieces_no_pawns = (friend_pos | enemy_pos) - pawns_pos;
+
+    moves |= (pawns_pos >> 8) & ~pieces_no_pawns;
+    moves |= (pawns_pos & RANK_7 & ~(pieces_no_pawns << 8) & ~(pieces_no_pawns << 16)) >> 16;
+    moves |= ((pawns_pos & ~FILE_A) >> 7) & enemy_pos;
+    moves |= ((pawns_pos & ~FILE_H) >> 9) & enemy_pos;
 
     return moves;
 }

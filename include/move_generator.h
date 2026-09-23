@@ -10,6 +10,7 @@ constexpr uint64_t FILE_H = 0x8080808080808080ULL;
 
 constexpr uint64_t RANK_1 = 0xFFULL;
 constexpr uint64_t RANK_2 = RANK_1 << 8;
+constexpr uint64_t RANK_7 = RANK_1 << 48;
 
 class MoveGenerator {
     public:
