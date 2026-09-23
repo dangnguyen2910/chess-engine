@@ -284,9 +284,46 @@ std::uint64_t MoveGenerator::generate_queen_moves() {
         queen_pos -= queen;
     }
 
+    return moves;
+}
+
+std::uint64_t MoveGenerator::generate_pawns_moves() {
+    std::uint64_t moves = 0ULL;
+
+    if (_board.is_white_move()) {
+        moves = _generate_white_pawns_moves();
+
+    } else {
+        moves = _generate_black_pawns_moves();
+    }
+
+    return moves;
+}
+
+std::uint64_t MoveGenerator::_generate_white_pawns_moves() {
+    std::uint64_t moves = 0ULL;
+    std::uint64_t pawns_pos = _board.get_white_pawns_pos();
+    std::uint64_t friend_pos = _board.get_white_pieces_pos();
+    std::uint64_t enemy_pos = _board.get_black_pieces_pos();
+    std::uint64_t pieces_no_pawns = (friend_pos | enemy_pos) - pawns_pos;
+
+    moves |= (pawns_pos << 8) & ~pieces_no_pawns;
+    moves |= (pawns_pos & RANK_2 & ~(pieces_no_pawns >> 8) & ~(pieces_no_pawns >> 16)) << 16;
+    moves |= ((pawns_pos & ~FILE_A) << 7) & enemy_pos;
+    moves |= ((pawns_pos & ~FILE_H) << 9) & enemy_pos;
+
     Board board;
-    board.set_piece(Piece::QUEEN, Color::WHITE, moves);
+    board.set_piece(Piece::PAWN, Color::WHITE, moves);
     std::cout << board.to_string() << std::endl;
+
+    return moves;
+}
+
+std::uint64_t MoveGenerator::_generate_black_pawns_moves() {
+    std::uint64_t moves = 0ULL;
+    std::uint64_t pawns_pos = _board.get_black_pawns_pos();
+    std::uint64_t friend_pos = _board.get_black_pieces_pos();
+    std::uint64_t enemy_pos = _board.get_white_pieces_pos();
 
     return moves;
 }

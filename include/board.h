@@ -36,6 +36,7 @@ class Board {
         std::uint64_t get_white_rooks_pos() { return _white_rooks_pos; }
         std::uint64_t get_white_bishops_pos() { return _white_bishops_pos; }
         std::uint64_t get_white_queen_pos() { return _white_queen_pos; }
+        std::uint64_t get_white_pawns_pos() { return _white_pawns_pos; }
 
         std::uint64_t get_black_pieces_pos();
         std::uint64_t get_black_knights_pos() { return _black_knights_pos; };
@@ -43,6 +44,7 @@ class Board {
         std::uint64_t get_black_rooks_pos() { return _black_rooks_pos; }
         std::uint64_t get_black_bishops_pos() { return _black_bishops_pos; }
         std::uint64_t get_black_queen_pos() { return _black_queen_pos; }
+        std::uint64_t get_black_pawns_pos() { return _black_pawns_pos; }
 
         bool is_white_move() { return _is_white_move; }
 

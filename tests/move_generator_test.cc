@@ -276,3 +276,73 @@ TEST(MoveGenerator, generate_white_queen_moves_pos2) {
     }
     ASSERT_EQ(moves, expected);
 }
+
+TEST(MoveGenerator, generate_white_pawns_moves_pos1) {
+    using enum Square;
+    Board board;
+    board.set_piece(Piece::PAWN, Color::WHITE, Square::A2);
+    board.set_piece(Piece::PAWN, Color::WHITE, Square::B2);
+    board.set_piece(Piece::PAWN, Color::WHITE, Square::C2);
+    board.set_piece(Piece::PAWN, Color::WHITE, Square::D2);
+
+    MoveGenerator generator = MoveGenerator(board);
+    std::uint64_t moves = generator.generate_pawns_moves();
+
+    std::uint64_t expected = 0ULL;
+    std::vector<Square> squares = { A3, B3, C3, D3,
+                                    A4, B4, C4, D4 };
+    std::vector<std::uint64_t> bbs = to_bitboard(squares);
+
+    for (const auto& bb : bbs) {
+        expected |= bb;
+    }
+    ASSERT_EQ(moves, expected);
+}
+
+TEST(MoveGenerator, generate_white_pawns_moves_pos2) {
+    using enum Square;
+    Board board;
+    board.set_piece(Piece::PAWN, Color::WHITE, Square::A2);
+    board.set_piece(Piece::PAWN, Color::WHITE, Square::B2);
+    board.set_piece(Piece::PAWN, Color::WHITE, Square::C3);
+    board.set_piece(Piece::PAWN, Color::WHITE, Square::D2);
+    board.set_piece(Piece::PAWN, Color::WHITE, Square::E3);
+
+    board.set_piece(Piece::BISHOP, Color::WHITE, A3);
+    board.set_piece(Piece::KNIGHT, Color::BLACK, B4);
+
+    MoveGenerator generator = MoveGenerator(board);
+    std::uint64_t moves = generator.generate_pawns_moves();
+
+    std::uint64_t expected = 0ULL;
+    std::vector<Square> squares = { B3, D3, C4, D4, E4 , B4 };
+    std::vector<std::uint64_t> bbs = to_bitboard(squares);
+
+    for (const auto& bb : bbs) {
+        expected |= bb;
+    }
+    ASSERT_EQ(moves, expected);
+}
+
+TEST(MoveGenerator, generate_white_pawns_moves_pos3) {
+    using enum Square;
+    Board board;
+    board.set_piece(Piece::PAWN, Color::WHITE, Square::A4);
+    board.set_piece(Piece::PAWN, Color::WHITE, Square::C4);
+    board.set_piece(Piece::PAWN, Color::WHITE, Square::D2);
+    board.set_piece(Piece::PAWN, Color::WHITE, Square::E3);
+
+    board.set_piece(Piece::PAWN, Color::BLACK, B5);
+
+    MoveGenerator generator = MoveGenerator(board);
+    std::uint64_t moves = generator.generate_pawns_moves();
+
+    std::uint64_t expected = 0ULL;
+    std::vector<Square> squares = {A5, B5, C5, D3, D4, E4};
+    std::vector<std::uint64_t> bbs = to_bitboard(squares);
+
+    for (const auto& bb : bbs) {
+        expected |= bb;
+    }
+    ASSERT_EQ(moves, expected);
+}
