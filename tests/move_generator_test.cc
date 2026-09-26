@@ -8,7 +8,7 @@ TEST(MoveGenerator, generate_white_knights_moves_initial_position) {
     Board board;
     board.initial_position();
     MoveGenerator generator = MoveGenerator(board);
-    std::uint64_t moves = generator.generate_knights_moves();
+    std::uint64_t moves = generator.generate_knights_moves(true);
     std::uint64_t expected = 0xA50000;
     ASSERT_EQ(moves, expected);
 }
@@ -19,7 +19,7 @@ TEST(MoveGenerator, generate_white_knights_moves_pos_1) {
     board.set_piece(Piece::KNIGHT, Color::WHITE, Square::E7);
 
     MoveGenerator generator = MoveGenerator(board);
-    std::uint64_t moves = generator.generate_knights_moves();
+    std::uint64_t moves = generator.generate_knights_moves(true);
     std::uint64_t expected = to_bitboard(Square::A4) | to_bitboard(Square::C4)
                             | to_bitboard(Square::D1) | to_bitboard(Square::D3)
                             | to_bitboard(Square::C6) | to_bitboard(Square::C8)
@@ -34,7 +34,7 @@ TEST(MoveGenerator, generate_white_knights_moves_pos_2) {
     board.set_piece(Piece::KNIGHT, Color::WHITE, Square::E4);
 
     MoveGenerator generator = MoveGenerator(board);
-    std::uint64_t moves = generator.generate_knights_moves();
+    std::uint64_t moves = generator.generate_knights_moves(true);
     std::uint64_t expected = to_bitboard(Square::C3) | to_bitboard(Square::C5)
                              | to_bitboard(Square::D2) | to_bitboard(Square::D6)
                              | to_bitboard(Square::F2) | to_bitboard(Square::F6)
@@ -49,7 +49,7 @@ TEST(MoveGenerator, generate_white_knights_moves_pos_3) {
     board.set_piece(Piece::KNIGHT, Color::WHITE, Square::D3);
 
     MoveGenerator generator = MoveGenerator(board);
-    std::uint64_t moves = generator.generate_knights_moves();
+    std::uint64_t moves = generator.generate_knights_moves(true);
     std::uint64_t expected = to_bitboard(Square::A4) | to_bitboard(Square::C4)
                              | to_bitboard(Square::D1) | to_bitboard(Square::B4)
                              | to_bitboard(Square::C1) | to_bitboard(Square::C5)
@@ -66,7 +66,7 @@ TEST(MoveGenerator, generate_black_knights_moves_pos_1) {
     board.set_moveside(Color::BLACK);
 
     MoveGenerator generator = MoveGenerator(board);
-    std::uint64_t moves = generator.generate_knights_moves();
+    std::uint64_t moves = generator.generate_knights_moves(false);
     std::uint64_t expected = to_bitboard(Square::A4) | to_bitboard(Square::C4)
                              | to_bitboard(Square::D1) | to_bitboard(Square::B4)
                              | to_bitboard(Square::C1) | to_bitboard(Square::C5)
@@ -84,7 +84,7 @@ TEST(MoveGenerator, generate_white_king_moves_pos1) {
     board.set_moveside(Color::WHITE);
 
     MoveGenerator generator = MoveGenerator(board);
-    std::uint64_t moves = generator.generate_king_moves();
+    std::uint64_t moves = generator.generate_king_moves(true);
     std::uint64_t expected = 0ULL;
 
     expected |= to_bitboard(A4) | to_bitboard(B2) | to_bitboard(B3) | to_bitboard(B4);
@@ -100,7 +100,7 @@ TEST(MoveGenerator, generate_white_king_moves_pos2) {
     board.set_moveside(Color::WHITE);
 
     MoveGenerator generator = MoveGenerator(board);
-    std::uint64_t moves = generator.generate_king_moves();
+    std::uint64_t moves = generator.generate_king_moves(true);
     std::uint64_t expected = 0ULL;
 
     expected |= to_bitboard(C1) | to_bitboard(E1) | to_bitboard(C2) | to_bitboard(D2) | to_bitboard(E2);
@@ -116,7 +116,7 @@ TEST(MoveGenerator, generate_white_king_moves_pos3) {
     board.set_moveside(Color::WHITE);
 
     MoveGenerator generator = MoveGenerator(board);
-    std::uint64_t moves = generator.generate_king_moves();
+    std::uint64_t moves = generator.generate_king_moves(true);
     std::uint64_t expected = 0ULL;
 
     expected |= to_bitboard(D5) | to_bitboard(E5) | to_bitboard(F5) | to_bitboard(F4)
@@ -131,7 +131,7 @@ TEST(MoveGenerator, generate_white_rooks_moves_pos1) {
     board.set_piece(Piece::ROOK, Color::WHITE, Square::A1);
 
     MoveGenerator generator = MoveGenerator(board);
-    std::uint64_t moves = generator.generate_rooks_moves();
+    std::uint64_t moves = generator.generate_rooks_moves(true);
 
     std::uint64_t expected = 0ULL;
     std::vector<Square> squares = {A2, A3, A4, A5, A6, A7, A8, B1, C1, D1, E1, F1, G1, H1,
@@ -155,7 +155,7 @@ TEST(MoveGenerator, generate_white_rooks_moves_pos2) {
     board.set_piece(Piece::PAWN, Color::BLACK, E2);
 
     MoveGenerator generator = MoveGenerator(board);
-    std::uint64_t moves = generator.generate_rooks_moves();
+    std::uint64_t moves = generator.generate_rooks_moves(true);
 
     std::uint64_t expected = 0ULL;
     std::vector<Square> squares = {E2, E3, E5, E6, B4, C4, D4, F4, G4};
@@ -174,7 +174,7 @@ TEST(MoveGenerator, generate_white_bishops_moves_pos1) {
     board.set_piece(Piece::BISHOP, Color::WHITE, Square::E5);
 
     MoveGenerator generator = MoveGenerator(board);
-    std::uint64_t moves = generator.generate_bishops_moves();
+    std::uint64_t moves = generator.generate_bishops_moves(true);
 
     std::uint64_t expected = 0ULL;
     std::vector<Square> squares = {C6, D7, E8, C4, D3, E2, F1, A4, A6,
@@ -197,7 +197,7 @@ TEST(MoveGenerator, generate_white_bishops_moves_pos2) {
     board.set_piece(Piece::BISHOP, Color::BLACK, Square::G7);
 
     MoveGenerator generator = MoveGenerator(board);
-    std::uint64_t moves = generator.generate_bishops_moves();
+    std::uint64_t moves = generator.generate_bishops_moves(true);
 
     std::uint64_t expected = 0ULL;
     std::vector<Square> squares = {C6, D7, C4, A4, A6,
@@ -216,7 +216,7 @@ TEST(MoveGenerator, generate_white_bishops_moves_pos3) {
     board.set_piece(Piece::BISHOP, Color::WHITE, Square::A1);
 
     MoveGenerator generator = MoveGenerator(board);
-    std::uint64_t moves = generator.generate_bishops_moves();
+    std::uint64_t moves = generator.generate_bishops_moves(true);
 
     std::uint64_t expected = 0ULL;
     std::vector<Square> squares = { B2, C3, D4, E5, F6, G7, H8 };
@@ -234,7 +234,7 @@ TEST(MoveGenerator, generate_white_queen_moves_pos1) {
     board.set_piece(Piece::QUEEN, Color::WHITE, Square::E4);
 
     MoveGenerator generator = MoveGenerator(board);
-    std::uint64_t moves = generator.generate_queen_moves();
+    std::uint64_t moves = generator.generate_queen_moves(true);
 
     std::uint64_t expected = 0ULL;
     std::vector<Square> squares = { E1, E2, E3, E5, E6, E7, E8,
@@ -262,7 +262,7 @@ TEST(MoveGenerator, generate_white_queen_moves_pos2) {
     board.set_piece(Piece::ROOK, Color::BLACK, Square::G6);
 
     MoveGenerator generator = MoveGenerator(board);
-    std::uint64_t moves = generator.generate_queen_moves();
+    std::uint64_t moves = generator.generate_queen_moves(true);
 
     std::uint64_t expected = 0ULL;
     std::vector<Square> squares = { E2, E3, E5,
@@ -286,7 +286,7 @@ TEST(MoveGenerator, generate_white_pawns_moves_pos1) {
     board.set_piece(Piece::PAWN, Color::WHITE, Square::D2);
 
     MoveGenerator generator = MoveGenerator(board);
-    std::uint64_t moves = generator.generate_pawns_moves();
+    std::uint64_t moves = generator.generate_pawns_moves(true);
 
     std::uint64_t expected = 0ULL;
     std::vector<Square> squares = { A3, B3, C3, D3,
@@ -312,7 +312,7 @@ TEST(MoveGenerator, generate_white_pawns_moves_pos2) {
     board.set_piece(Piece::KNIGHT, Color::BLACK, B4);
 
     MoveGenerator generator = MoveGenerator(board);
-    std::uint64_t moves = generator.generate_pawns_moves();
+    std::uint64_t moves = generator.generate_pawns_moves(true);
 
     std::uint64_t expected = 0ULL;
     std::vector<Square> squares = { B3, D3, C4, D4, E4 , B4 };
@@ -335,7 +335,7 @@ TEST(MoveGenerator, generate_white_pawns_moves_pos3) {
     board.set_piece(Piece::PAWN, Color::BLACK, B5);
 
     MoveGenerator generator = MoveGenerator(board);
-    std::uint64_t moves = generator.generate_pawns_moves();
+    std::uint64_t moves = generator.generate_pawns_moves(true);
 
     std::uint64_t expected = 0ULL;
     std::vector<Square> squares = {A5, B5, C5, D3, D4, E4};
@@ -357,7 +357,7 @@ TEST(MoveGenerator, generate_black_pawns_moves_pos1) {
     board.set_piece(Piece::PAWN, Color::BLACK, Square::D7);
 
     MoveGenerator generator = MoveGenerator(board);
-    std::uint64_t moves = generator.generate_pawns_moves();
+    std::uint64_t moves = generator.generate_pawns_moves(false);
 
     std::uint64_t expected = 0ULL;
     std::vector<Square> squares = { A6, B6, C6, D6,
@@ -384,7 +384,7 @@ TEST(MoveGenerator, generate_black_pawns_moves_pos2) {
     board.set_piece(Piece::KNIGHT, Color::BLACK, B5);
 
     MoveGenerator generator = MoveGenerator(board);
-    std::uint64_t moves = generator.generate_pawns_moves();
+    std::uint64_t moves = generator.generate_pawns_moves(false);
 
     std::uint64_t expected = 0ULL;
     std::vector<Square> squares = { A6, B6, C5, D6, D5, E5 };
@@ -411,7 +411,7 @@ TEST(MoveGenerator, generate_black_pawns_moves_pos3) {
     board.set_piece(Piece::KNIGHT, Color::BLACK, B5);
 
     MoveGenerator generator = MoveGenerator(board);
-    std::uint64_t moves = generator.generate_pawns_moves();
+    std::uint64_t moves = generator.generate_pawns_moves(false);
 
     std::uint64_t expected = 0ULL;
     std::vector<Square> squares = { A6, B6, C5, D6, D5, E5, F5 };

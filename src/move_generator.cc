@@ -12,12 +12,12 @@ MoveGenerator::MoveGenerator(Board board) {
     _board = board;
 }
 
-std::uint64_t MoveGenerator::generate_knights_moves() {
+std::uint64_t MoveGenerator::generate_knights_moves(bool white_to_move) {
     std::uint64_t knights_pos;
     std::uint64_t friend_pos;
     std::uint64_t moves = 0ULL;
 
-    if (_board.is_white_move()) {
+    if (white_to_move) {
         knights_pos = _board.get_white_knights_pos();
         friend_pos = _board.get_white_pieces_pos();
     } else {
@@ -40,12 +40,12 @@ std::uint64_t MoveGenerator::generate_knights_moves() {
 
 // TODO: Current function generate pseudo-legal moves only, Implement
 // generating legal moves after done with other pieces.
-std::uint64_t MoveGenerator::generate_king_moves() {
+std::uint64_t MoveGenerator::generate_king_moves(bool white_to_move) {
     std::uint64_t king_pos;
     std::uint64_t friend_pos;
     std::uint64_t moves = 0ULL;
 
-    if (_board.is_white_move()) {
+    if (white_to_move) {
         king_pos = _board.get_white_king_pos();
         friend_pos = _board.get_white_pieces_pos();
     } else {
@@ -66,13 +66,13 @@ std::uint64_t MoveGenerator::generate_king_moves() {
     return moves;
 }
 
-std::uint64_t MoveGenerator::generate_rooks_moves() {
+std::uint64_t MoveGenerator::generate_rooks_moves(bool white_to_move) {
     std::uint64_t rooks_pos;
     std::uint64_t friend_pos;
     std::uint64_t enemy_pos;
     std::uint64_t moves = 0ULL;
 
-    if (_board.is_white_move()) {
+    if (white_to_move) {
         rooks_pos = _board.get_white_rooks_pos();
         friend_pos = _board.get_white_pieces_pos();
         enemy_pos = _board.get_black_pieces_pos();
@@ -125,13 +125,13 @@ std::uint64_t MoveGenerator::generate_rooks_moves() {
     return moves;
 }
 
-std::uint64_t MoveGenerator::generate_bishops_moves() {
+std::uint64_t MoveGenerator::generate_bishops_moves(bool white_to_move) {
     std::uint64_t moves = 0ULL;
     std::uint64_t bishops_pos;
     std::uint64_t friend_pos;
     std::uint64_t enemy_pos;
 
-    if (_board.is_white_move()) {
+    if (white_to_move) {
         bishops_pos = _board.get_white_bishops_pos();
         friend_pos = _board.get_white_pieces_pos();
         enemy_pos = _board.get_black_pieces_pos();
@@ -190,14 +190,14 @@ std::uint64_t MoveGenerator::generate_bishops_moves() {
     return moves;
 }
 
-std::uint64_t MoveGenerator::generate_queen_moves() {
+std::uint64_t MoveGenerator::generate_queen_moves(bool white_to_move) {
     std::uint64_t queen_pos = 0ULL;
     std::uint64_t friend_pos = 0ULL;
     std::uint64_t enemy_pos = 0ULL;
     std::uint64_t moves = 0ULL;
 
 
-    if (_board.is_white_move()) {
+    if (white_to_move) {
         queen_pos = _board.get_white_queen_pos();
         friend_pos = _board.get_white_pieces_pos();
         enemy_pos = _board.get_black_pieces_pos();
@@ -287,10 +287,10 @@ std::uint64_t MoveGenerator::generate_queen_moves() {
     return moves;
 }
 
-std::uint64_t MoveGenerator::generate_pawns_moves() {
+std::uint64_t MoveGenerator::generate_pawns_moves(bool white_to_move) {
     std::uint64_t moves = 0ULL;
 
-    if (_board.is_white_move()) {
+    if (white_to_move) {
         moves = _generate_white_pawns_moves();
 
     } else {
