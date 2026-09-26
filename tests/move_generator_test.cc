@@ -124,6 +124,142 @@ TEST(MoveGenerator, generate_white_king_moves_pos3) {
     ASSERT_EQ(moves, expected);
 }
 
+TEST(MoveGenerator, generate_white_castling_pos1) {
+    using enum Square;
+    Board board;
+    board.set_piece(Piece::KING, Color::WHITE, Square::E1);
+    board.set_piece(Piece::ROOK, Color::WHITE, Square::H1);
+    board.set_piece(Piece::ROOK, Color::WHITE, Square::A1);
+    board.set_moveside(Color::WHITE);
+    board.set_white_castling_right(true, true);
+
+    MoveGenerator generator = MoveGenerator(board);
+    std::uint64_t moves = generator.generate_king_moves(true);
+    std::uint64_t expected = 0ULL;
+
+    std::vector<Square> squares = { D1, D2, E2, F1, F2, G1, C1 };
+    std::vector<std::uint64_t> bbs = to_bitboard(squares);
+    for (const auto& bb : bbs) {
+        expected |= bb;
+    }
+    ASSERT_EQ(moves, expected);
+}
+
+TEST(MoveGenerator, generate_white_castling_pos2) {
+    using enum Square;
+    Board board;
+    board.set_piece(Piece::KING, Color::WHITE, Square::E1);
+    board.set_piece(Piece::ROOK, Color::WHITE, Square::H1);
+    board.set_piece(Piece::ROOK, Color::WHITE, Square::A1);
+
+    board.set_piece(Piece::BISHOP, Color::BLACK, Square::F4);
+
+    board.set_moveside(Color::WHITE);
+    board.set_white_castling_right(true, true);
+
+    MoveGenerator generator = MoveGenerator(board);
+    std::uint64_t moves = generator.generate_king_moves(true);
+    std::uint64_t expected = 0ULL;
+
+    std::vector<Square> squares = { D1, D2, E2, F1, F2, G1 };
+    std::vector<std::uint64_t> bbs = to_bitboard(squares);
+    for (const auto& bb : bbs) {
+        expected |= bb;
+    }
+    ASSERT_EQ(moves, expected);
+}
+
+TEST(MoveGenerator, generate_white_castling_pos3) {
+    using enum Square;
+    Board board;
+    board.set_piece(Piece::KING, Color::WHITE, Square::E1);
+    board.set_piece(Piece::ROOK, Color::WHITE, Square::A1);
+
+    board.set_piece(Piece::BISHOP, Color::BLACK, Square::F4);
+
+    board.set_moveside(Color::WHITE);
+    board.set_white_castling_right(true, true);
+
+    MoveGenerator generator = MoveGenerator(board);
+    std::uint64_t moves = generator.generate_king_moves(true);
+    std::uint64_t expected = 0ULL;
+
+    std::vector<Square> squares = { D1, D2, E2, F1, F2 };
+    std::vector<std::uint64_t> bbs = to_bitboard(squares);
+    for (const auto& bb : bbs) {
+        expected |= bb;
+    }
+    ASSERT_EQ(moves, expected);
+}
+
+TEST(MoveGenerator, generate_black_castling_pos1) {
+    using enum Square;
+    Board board;
+    board.set_piece(Piece::KING, Color::BLACK, Square::E8);
+    board.set_piece(Piece::ROOK, Color::BLACK, Square::H8);
+    board.set_piece(Piece::ROOK, Color::BLACK, Square::A8);
+    board.set_moveside(Color::BLACK);
+    board.set_black_castling_right(true, true);
+
+    MoveGenerator generator = MoveGenerator(board);
+    std::uint64_t moves = generator.generate_king_moves(false);
+    std::uint64_t expected = 0ULL;
+
+    std::vector<Square> squares = { C8, D8, D7, E7, F7, F8, G8 };
+    std::vector<std::uint64_t> bbs = to_bitboard(squares);
+    for (const auto& bb : bbs) {
+        expected |= bb;
+    }
+    ASSERT_EQ(moves, expected);
+}
+
+TEST(MoveGenerator, generate_black_castling_pos2) {
+    using enum Square;
+    Board board;
+    board.set_piece(Piece::KING, Color::BLACK, Square::E8);
+    board.set_piece(Piece::ROOK, Color::BLACK, Square::H8);
+    board.set_piece(Piece::ROOK, Color::BLACK, Square::A8);
+
+    board.set_piece(Piece::BISHOP, Color::WHITE, Square::G4);
+
+    board.set_moveside(Color::BLACK);
+    board.set_black_castling_right(true, true);
+
+    MoveGenerator generator = MoveGenerator(board);
+    std::uint64_t moves = generator.generate_king_moves(false);
+    std::uint64_t expected = 0ULL;
+
+    std::vector<Square> squares = { D8, D7, E7, F7, F8, G8 };
+    std::vector<std::uint64_t> bbs = to_bitboard(squares);
+    for (const auto& bb : bbs) {
+        expected |= bb;
+    }
+    ASSERT_EQ(moves, expected);
+}
+
+TEST(MoveGenerator, generate_black_castling_pos3) {
+    using enum Square;
+    Board board;
+    board.set_piece(Piece::KING, Color::BLACK, Square::E8);
+    board.set_piece(Piece::ROOK, Color::BLACK, Square::A8);
+
+    board.set_piece(Piece::BISHOP, Color::WHITE, Square::G4);
+
+    board.set_moveside(Color::BLACK);
+    board.set_black_castling_right(true, true);
+
+    MoveGenerator generator = MoveGenerator(board);
+    std::uint64_t moves = generator.generate_king_moves(false);
+    std::uint64_t expected = 0ULL;
+
+    std::vector<Square> squares = { D8, D7, E7, F7, F8 };
+    std::vector<std::uint64_t> bbs = to_bitboard(squares);
+    for (const auto& bb : bbs) {
+        expected |= bb;
+    }
+    ASSERT_EQ(moves, expected);
+}
+
 TEST(MoveGenerator, generate_white_rooks_moves_pos1) {
     using enum Square;
     Board board;

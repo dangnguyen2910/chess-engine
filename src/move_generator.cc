@@ -1,5 +1,6 @@
 #include "move_generator.h"
 #include "board.h"
+#include "square.h"
 #include <bit>
 #include <bitset>
 #include <iostream>
@@ -41,17 +42,37 @@ std::uint64_t MoveGenerator::generate_knights_moves(bool white_to_move) {
 // TODO: Current function generate pseudo-legal moves only, Implement
 // generating legal moves after done with other pieces.
 std::uint64_t MoveGenerator::generate_king_moves(bool white_to_move) {
-    std::uint64_t king_pos;
-    std::uint64_t friend_pos;
+    std::uint64_t king_pos = 0ULL;
+    std::uint64_t friend_pos = 0ULL;
+    std::uint64_t enemy_pos = 0ULL;
+    std::vector<bool> castling_right = {};
+    bool king_at_initial_pos = false;
     std::uint64_t moves = 0ULL;
+    std::vector<bool> rooks_at_initial_pos = { false, false };
 
     if (white_to_move) {
         king_pos = _board.get_white_king_pos();
         friend_pos = _board.get_white_pieces_pos();
+        enemy_pos = _board.get_black_pieces_pos();
+
+        castling_right = _board.get_white_castling_right();
+        king_at_initial_pos = king_pos & to_bitboard(Square::E1);
+        std::uint64_t rooks_pos = _board.get_white_rooks_pos();
+        rooks_at_initial_pos[KING_SIDE] = rooks_pos & to_bitboard(Square::H1);
+        rooks_at_initial_pos[QUEEN_SIDE] = rooks_pos & to_bitboard(Square::A1);
     } else {
         king_pos = _board.get_black_king_pos();
         friend_pos = _board.get_black_pieces_pos();
+        enemy_pos = _board.get_white_pieces_pos();
+
+        castling_right = _board.get_black_castling_right();
+        king_at_initial_pos = king_pos & to_bitboard(Square::E8);
+        std::uint64_t rooks_pos = _board.get_black_rooks_pos();
+        rooks_at_initial_pos[KING_SIDE] = rooks_pos & to_bitboard(Square::H8);
+        rooks_at_initial_pos[QUEEN_SIDE] = rooks_pos & to_bitboard(Square::A8);
     }
+
+    std::uint64_t pieces = friend_pos | enemy_pos;
 
     moves |= ((king_pos & (~FILE_H)) << 1) & (~friend_pos);
     moves |= ((king_pos & (~FILE_A)) << 7) & (~friend_pos);
@@ -62,6 +83,44 @@ std::uint64_t MoveGenerator::generate_king_moves(bool white_to_move) {
     moves |= ((king_pos & (~FILE_H)) >> 7) & (~friend_pos);
     moves |= king_pos >> 8 & (~friend_pos);
     moves |= ((king_pos & (~FILE_A)) >> 9) & (~friend_pos);
+
+    // Castling right = true && King at initial position &&
+    // Rook at initial position
+    // No friend pieces and enemy pices on path &&
+    // No enemy piece is attacking at path.
+    std::uint64_t attacked_squares = 0ULL;
+
+    if (castling_right[KING_SIDE] && king_at_initial_pos
+        && rooks_at_initial_pos[KING_SIDE]
+    ) {
+        attacked_squares = white_to_move ? _generate_black_moves() : _generate_white_moves();
+
+        if (((~attacked_squares >> 1) & king_pos)
+            && ((~attacked_squares >> 2) & king_pos)
+            && ((~pieces >> 1) & king_pos)
+            && ((~pieces >> 2) & king_pos)
+        ) {
+            moves |= king_pos << 2;
+        }
+    } else {
+        castling_right[KING_SIDE] = false;
+    }
+
+    if (castling_right[QUEEN_SIDE] && king_at_initial_pos
+        && rooks_at_initial_pos[QUEEN_SIDE]
+    ) {
+        attacked_squares = white_to_move ? _generate_black_moves() : _generate_white_moves();
+
+        if (((~attacked_squares << 1) & king_pos)
+            && ((~attacked_squares << 2) & king_pos)
+            && ((~pieces << 1) & king_pos)
+            && ((~pieces << 2) & king_pos)
+        ) {
+            moves |= king_pos >> 2;
+        }
+    } else {
+        castling_right[QUEEN_SIDE] = false;
+    }
 
     return moves;
 }
@@ -327,5 +386,27 @@ std::uint64_t MoveGenerator::_generate_black_pawns_moves() {
     moves |= ((pawns_pos & ~FILE_A) >> 7) & enemy_pos;
     moves |= ((pawns_pos & ~FILE_H) >> 9) & enemy_pos;
 
+    return moves;
+}
+
+std::uint64_t MoveGenerator::_generate_white_moves() {
+    std::uint64_t moves = 0ULL;
+    moves |= generate_pawns_moves(true);
+    moves |= generate_king_moves(true);
+    moves |= generate_queen_moves(true);
+    moves |= generate_bishops_moves(true);
+    moves |= generate_knights_moves(true);
+    moves |= generate_rooks_moves(true);
+    return moves;
+}
+
+std::uint64_t MoveGenerator::_generate_black_moves() {
+    std::uint64_t moves = 0ULL;
+    moves |= generate_pawns_moves(false);
+    moves |= generate_king_moves(false);
+    moves |= generate_queen_moves(false);
+    moves |= generate_bishops_moves(false);
+    moves |= generate_knights_moves(false);
+    moves |= generate_rooks_moves(false);
     return moves;
 }
