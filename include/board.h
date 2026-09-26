@@ -29,6 +29,8 @@ class Board {
         void set_piece(Piece piece, Color color, Square square);
         void set_piece(Piece piece, Color color, std::uint64_t bitboard);
         void set_moveside(Color color);
+        void set_white_castling_right(bool king_side, bool queen_side);
+        void set_black_castling_right(bool king_side, bool queen_side);
 
         std::uint64_t get_white_pieces_pos();
         std::uint64_t get_white_knights_pos() { return _white_knights_pos; }
@@ -37,6 +39,7 @@ class Board {
         std::uint64_t get_white_bishops_pos() { return _white_bishops_pos; }
         std::uint64_t get_white_queen_pos() { return _white_queen_pos; }
         std::uint64_t get_white_pawns_pos() { return _white_pawns_pos; }
+        std::vector<bool> get_white_castling_right() { return _white_castling_right; }
 
         std::uint64_t get_black_pieces_pos();
         std::uint64_t get_black_knights_pos() { return _black_knights_pos; };
@@ -45,6 +48,7 @@ class Board {
         std::uint64_t get_black_bishops_pos() { return _black_bishops_pos; }
         std::uint64_t get_black_queen_pos() { return _black_queen_pos; }
         std::uint64_t get_black_pawns_pos() { return _black_pawns_pos; }
+        std::vector<bool> get_black_castling_right() { return _black_castling_right; }
 
         bool is_white_move() { return _is_white_move; }
 

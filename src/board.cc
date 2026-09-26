@@ -20,8 +20,8 @@ Board::Board() {
     _en_passant_pos = 0;
 
     _is_white_move = true;
-    _white_castling_right = {true, true};
-    _black_castling_right = {true, true};
+    _white_castling_right = {false, false};
+    _black_castling_right = {false, false};
 
     _halfmove_clock = 0;
 }
@@ -118,6 +118,16 @@ void Board::set_moveside(Color color) {
         case Color::WHITE: _is_white_move = true; break;
         case Color::BLACK: _is_white_move = false; break;
     }
+}
+
+void Board::set_white_castling_right(bool king_side, bool queen_side) {
+    _white_castling_right[0] = king_side;
+    _white_castling_right[1] = queen_side;
+}
+
+void Board::set_black_castling_right(bool king_side, bool queen_side) {
+    _black_castling_right[0] = king_side;
+    _black_castling_right[1] = queen_side;
 }
 
 std::uint64_t Board::get_white_pieces_pos() {
