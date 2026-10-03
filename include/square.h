@@ -2,6 +2,7 @@
 
 #include <cstdint>
 #include <vector>
+#include <string>
 
 enum class Square : int {
     A1, B1, C1, D1, E1, F1, G1, H1,
@@ -16,3 +17,5 @@ enum class Square : int {
 
 std::uint64_t to_bitboard(Square square);
 std::vector<std::uint64_t> to_bitboard(std::vector<Square> squares);
+
+std::string to_string(Square square);

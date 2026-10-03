@@ -11,3 +11,4 @@ enum class Piece : int {
     KING,
 };
 
+std::string to_string(Piece piece);

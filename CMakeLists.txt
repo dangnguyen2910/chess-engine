@@ -32,6 +32,7 @@ add_executable(chess-tests
     tests/board_test.cc
     tests/move_generator_test.cc
     tests/square_test.cc
+    tests/piece_test.cc
 )
 target_link_libraries(
     chess-tests

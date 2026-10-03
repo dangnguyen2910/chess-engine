@@ -19,4 +19,9 @@ TEST(Square, to_bitboard_g7) {
     EXPECT_EQ(output, expected);
 }
 
+TEST(Square, to_string) {
+    using enum Square;
+    EXPECT_EQ("a1", to_string(A1));
+    EXPECT_EQ("h8", to_string(H8));
+    EXPECT_EQ("e5", to_string(E5));
 }
