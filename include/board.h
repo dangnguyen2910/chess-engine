@@ -4,15 +4,8 @@
 #include <cstdint>
 #include <string>
 #include "square.h"
+#include "piece.h"
 
-enum class Piece : int {
-    PAWN,
-    KNIGHT,
-    BISHOP,
-    ROOK,
-    QUEEN,
-    KING,
-};
 
 enum class Color {
     WHITE,

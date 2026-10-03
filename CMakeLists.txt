@@ -14,14 +14,15 @@ FetchContent_Declare(
 FetchContent_MakeAvailable(googletest)
 
 add_library(chess-engine
-    src/board.cc include/board.h    
+    src/board.cc include/board.h
     src/move_generator.cc include/move_generator.h
     src/square.cc include/square.h
+    src/piece.cc include/piece.h
 )
 target_include_directories(chess-engine PUBLIC include)
 
-add_executable(chess-engine-app 
-    src/main.cc 
+add_executable(chess-engine-app
+    src/main.cc
 )
 target_link_libraries(chess-engine-app PRIVATE chess-engine)
 
