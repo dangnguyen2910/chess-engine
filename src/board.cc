@@ -1,4 +1,5 @@
 #include "board.h"
+#include "move_generator.h"
 #include "square.h"
 #include <string>
 
@@ -56,6 +57,46 @@ void Board::reset_board() {
     _black_castling_right = {false, false};
 
     _halfmove_clock = 0;
+}
+
+void Board::from_fen(std::string fen) {
+    std::vector<std::string> fen_fields = {}; 
+    std::string field = "";
+
+    // Extract 6 fields of FEN. 
+    for (int i = 0; i < fen.size(); i++) {
+        if (fen[i] == ' ') {
+            fen_fields.push_back(field); 
+            field = ""; 
+            continue; 
+        }
+
+        field += fen[i]; 
+    }
+
+    // Active color. 
+    if (fen_fields[1] == "w") _is_white_move = true; 
+    else if (fen_fields[1] == "b") _is_white_move = false; 
+
+    // Castling rights. 
+    _white_castling_right = { false, false }; 
+    _black_castling_right = { false, false }; 
+    for (const char& c : fen_fields[2]) {
+        switch (c) {
+            case '-': break; 
+            case 'K': _white_castling_right[KING_SIDE] = true; 
+            case 'Q': _white_castling_right[QUEEN_SIDE] = true; 
+            case 'k': _black_castling_right[KING_SIDE] = true; 
+            case 'q': _black_castling_right[QUEEN_SIDE] = true; 
+        }
+    }
+
+    // En passant target square. 
+
+    // Halfmove clock.
+    _halfmove_clock = std::stoi(fen_fields[4]); 
+    
+    // Fullmove number; 
 }
 
 void Board::set_piece(Piece piece, Color color, Square square) {

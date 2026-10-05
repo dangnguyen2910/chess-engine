@@ -19,6 +19,7 @@ class Board {
 
         void initial_position();
         void reset_board(); 
+        void from_fen(std::string fen); 
 
         void set_piece(Piece piece, Color color, Square square);
         void set_piece(Piece piece, Color color, std::uint64_t bitboard);
