@@ -1,6 +1,7 @@
 #pragma once
 
 #include "board.h"
+#include "move.h"
 #include <cstdint>
 
 constexpr uint64_t FILE_A = 0x0101010101010101ULL;
@@ -20,7 +21,7 @@ class MoveGenerator {
     public:
         MoveGenerator();
         MoveGenerator(Board board);
-        void generate_moves();
+        Move generate_moves();
 
         std::uint64_t generate_pawns_moves(bool white_to_move);
         std::uint64_t generate_knights_moves(bool white_to_move);

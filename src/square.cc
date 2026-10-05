@@ -18,11 +18,11 @@ std::vector<std::uint64_t> to_bitboard(std::vector<Square> squares) {
 std::string to_string(Square square) {
     int id = static_cast<int>(square);
     int rank = id / 8 + 1;
-    int file = id % 8;
+    int file = id % 8 + 1;
 
     std::string res = "";
 
-    switch (rank) {
+    switch (file) {
         case 1: res += "a"; break;
         case 2: res += "b"; break;
         case 3: res += "c"; break;
@@ -33,7 +33,7 @@ std::string to_string(Square square) {
         case 8: res += "h"; break;
     }
 
-    res += std::to_string(file + 1);
+    res += std::to_string(rank);
 
     return res;
 }

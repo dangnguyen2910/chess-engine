@@ -17,6 +17,7 @@ add_library(chess-engine
     src/board.cc include/board.h
     src/move_generator.cc include/move_generator.h
     src/square.cc include/square.h
+    src/move.cc include/move.h
     src/piece.cc include/piece.h
 )
 target_include_directories(chess-engine PUBLIC include)
@@ -33,6 +34,7 @@ add_executable(chess-tests
     tests/move_generator_test.cc
     tests/square_test.cc
     tests/piece_test.cc
+    tests/move_test.cc
 )
 target_link_libraries(
     chess-tests
