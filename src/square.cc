@@ -37,3 +37,23 @@ std::string to_string(Square square) {
 
     return res;
 }
+
+Square to_square(std::string sqr) {
+    char file = sqr[0]; 
+    char rank = sqr[1] - 1; 
+    int rank_no = rank - '0'; 
+
+    int file_no = 0; 
+    switch (file) {
+        case 'a': file_no = 0; break; 
+        case 'b': file_no = 1; break; 
+        case 'c': file_no = 2; break; 
+        case 'd': file_no = 3; break; 
+        case 'e': file_no = 4; break; 
+        case 'f': file_no = 5; break; 
+        case 'g': file_no = 6; break; 
+        case 'h': file_no = 7; break; 
+    }
+
+    return static_cast<Square>(rank_no * 8 + file_no); 
+}

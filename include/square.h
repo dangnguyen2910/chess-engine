@@ -19,3 +19,4 @@ std::uint64_t to_bitboard(Square square);
 std::vector<std::uint64_t> to_bitboard(std::vector<Square> squares);
 
 std::string to_string(Square square);
+Square to_square(std::string sqr); 

@@ -25,3 +25,10 @@ TEST(Square, to_string) {
     EXPECT_EQ("h8", to_string(H8));
     EXPECT_EQ("e5", to_string(E5));
 }
+
+TEST(Square, to_square) {
+    using enum Square; 
+    EXPECT_EQ(A1, to_square("a1")); 
+    EXPECT_EQ(H8, to_square("h8")); 
+    EXPECT_EQ(E5, to_square("e5")); 
+}
