@@ -11,4 +11,6 @@ std::string to_string(Piece piece) {
         case KNIGHT: return "n";
         case ROOK: return "r";
     }
+
+    return "error"; 
 }
